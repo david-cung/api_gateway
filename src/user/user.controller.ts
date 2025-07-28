@@ -3,6 +3,8 @@ import { UserTcpService } from './user-tcp.service';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { CreateUserResDto } from './dto/response';
 import { UpdateUserDto } from './dto/request/update-user.dto';
+import { LoginDto } from './dto/request';
+import { LoginResDto } from './dto/response/login-res.dto';
 
 @Controller('user')
 export class UserController {
@@ -11,6 +13,11 @@ export class UserController {
   @Post()
   async createUser(@Body() dto: CreateUserDto): Promise<CreateUserResDto> {
     return this.userService.createUser(dto);
+  }
+
+  @Post("/login")
+  async login(@Body() dto: LoginDto): Promise<LoginResDto> {
+    return this.userService.login(dto);
   }
 
   @Put()

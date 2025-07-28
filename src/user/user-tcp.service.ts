@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { CreateUserResDto } from './dto/response';
 import { UpdateUserDto } from './dto/request/update-user.dto';
+import { LoginDto } from './dto/request';
+import { LoginResDto } from './dto/response/login-res.dto';
 
 
 @Injectable()
@@ -26,6 +28,10 @@ export class UserTcpService extends BaseTcpService {
 
   async createUser(userData: CreateUserDto): Promise<CreateUserResDto> {
     return this.sendMessage<CreateUserResDto>('create_user', userData);
+  }
+
+  async login(userData: LoginDto): Promise<LoginResDto> {
+    return this.sendMessage<LoginResDto>('login_user', userData);
   }
 
   async updateUser(id: string, userData: Partial<UpdateUserDto>): Promise<CreateUserResDto> {

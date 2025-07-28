@@ -180,12 +180,12 @@ export class EnhancedTcpClientProvider implements ITcpClientProvider, OnModuleDe
       
       // Retry logic with exponential backoff
       if (connInfo.connectionAttempts < this.maxConnectionAttempts) {
-        const retryDelay = Math.min(1000 * Math.pow(2, connInfo.connectionAttempts), 30000);
+        const retryDelay = Math.min(1000 * Math.pow(2, connInfo.connectionAttempts), 2000);
         
         this.logger.warn(`🔄 Retrying connection to ${serviceName} in ${retryDelay}ms`);
         
         setTimeout(async () => {
-          if (this.connections.has(serviceName)) {
+          if (this.connections.has(serviceName)) { 
             try {
               await this.connectToService(serviceName, connInfo);
             } catch (retryError) {

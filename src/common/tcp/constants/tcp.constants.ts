@@ -1,7 +1,7 @@
 export const TCP_CONFIG = {
-  DEFAULT_TIMEOUT: 5000,
-  MAX_RETRIES: 3,
-  RETRY_DELAY: 1000,
+  DEFAULT_TIMEOUT: 1000,
+  MAX_RETRIES: 2,
+  RETRY_DELAY: 500,
 } as const;
 
 export const TCP_ERRORS: Record<string, string> = {

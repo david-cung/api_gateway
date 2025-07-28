@@ -1,21 +1,13 @@
 import { EnhancedTcpClientProvider } from '@/common/tcp/providers/enhanced-tcp-client.provider';
 import { BaseTcpService } from '@/common/tcp/services/base-tcp.service';
 import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dto/request/create-user.dto';
+import { CreateUserResDto } from './dto/response';
+import { UpdateUserDto } from './dto/request/update-user.dto';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-interface CreateUserDto {
-  name: string;
-  email: string;
-}
 
 @Injectable()
 export class UserTcpService extends BaseTcpService {
-  // Định nghĩa service name cho User Service
   protected readonly serviceName = 'user-service';
 
   constructor(tcpClientProvider: EnhancedTcpClientProvider) {
@@ -24,22 +16,20 @@ export class UserTcpService extends BaseTcpService {
 
   // ===== USER OPERATIONS =====
   
-  async getAllUsers(): Promise<User[]> {
-    return this.sendMessage<User[]>('get_all_users', {});
+  // async getAllUsers(): Promise<User[]> {
+  //   return this.sendMessage<User[]>('get_all_users', {});
+  // }
+
+  // async getUserById(id: number): Promise<User> {
+  //   return this.sendMessage<User>('get_user_by_id', { id });
+  // }
+
+  async createUser(userData: CreateUserDto): Promise<CreateUserResDto> {
+    return this.sendMessage<CreateUserResDto>('create_user', userData);
   }
 
-  async getUserById(id: number): Promise<User> {
-    return this.sendMessage<User>('get_user_by_id', { id });
-  }
-
-  async createUser(userData: CreateUserDto): Promise<string> {
-    const a = await this.sendMessage<string>('create_user', userData);
-    console.log('aaaaa', a);
-    return a;
-  }
-
-  async updateUser(id: number, userData: Partial<CreateUserDto>): Promise<User> {
-    return this.sendMessage<User>('update_user', { id, ...userData });
+  async updateUser(id: string, userData: Partial<UpdateUserDto>): Promise<CreateUserResDto> {
+    return this.sendMessage<CreateUserResDto>('update_user', { id, ...userData });
   }
 
   async deleteUser(id: number): Promise<boolean> {
@@ -48,20 +38,20 @@ export class UserTcpService extends BaseTcpService {
 
   // ===== BATCH OPERATIONS =====
   
-  async getUsersByIds(ids: number[]): Promise<User[]> {
-    const requests = ids.map(id => ({
-      pattern: 'get_user_by_id',
-      data: { id }
-    }));
+  // async getUsersByIds(ids: number[]): Promise<User[]> {
+  //   const requests = ids.map(id => ({
+  //     pattern: 'get_user_by_id',
+  //     data: { id }
+  //   }));
 
-    const results = await this.sendBatchMessages<User>(requests);
+  //   const results = await this.sendBatchMessages<User>(requests);
     
-    // Extract successful results
-    return results
-      .filter(result => result.success)
-      .map(result => result.data!)
-      .filter(Boolean);
-  }
+  //   // Extract successful results
+  //   return results
+  //     .filter(result => result.success)
+  //     .map(result => result.data!)
+  //     .filter(Boolean);
+  // }
 
   // ===== FIRE AND FORGET =====
   

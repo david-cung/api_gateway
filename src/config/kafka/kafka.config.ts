@@ -10,5 +10,5 @@ export const KafkaConfig: KafkaOptions = {
     consumer: {
       groupId: 'api-gateway-consumer',
     },
-  },
+  }, 
 };

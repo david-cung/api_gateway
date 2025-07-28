@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { UserTcpService } from './user-tcp.service';
 import { KafkaModule } from '../config/kafka/kafka.module';
 
 @Module({
   imports: [KafkaModule],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserTcpService],
 })
 export class UserModule {}

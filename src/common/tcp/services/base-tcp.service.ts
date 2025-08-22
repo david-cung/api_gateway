@@ -81,7 +81,6 @@ export abstract class BaseTcpService implements OnModuleDestroy {
     this.logger.debug(`Sending TCP message: ${pattern}`, { data });
 
     try {
-      // Nếu có override serviceName, dùng nó, nếu không dùng default
       const targetServiceName = overrideServiceName || this.getServiceName();
       const client = targetServiceName 
         ? await this.tcpClientProvider.getClient(targetServiceName)

@@ -12,7 +12,7 @@ import { KafkaProducerService } from './producer.service';
         options: {
           client: {
             clientId: 'api-gateway',
-            brokers: ['localhost:9092'],
+            brokers: ['kafka:9093'],
           },
           consumer: {
             groupId: 'api-gateway-consumer',
